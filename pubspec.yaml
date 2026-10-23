@@ -1,0 +1,54 @@
+name: sensebridge
+description: "SenseBridge — a Receiver-Dependent accessible communication app with live sign-language translation, TTS/STT, and in-app video calling."
+publish_to: 'none'
+version: 0.1.0
+
+environment:
+  sdk: '>=3.3.0 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  # --- Voice ---
+  flutter_tts: ^4.0.2          # Text -> Audio, and "read screen text" feature
+  speech_to_text: ^7.0.0       # Audio -> Text (speech recognition)
+
+  # --- Calling (Meet feature — currently set aside) ---
+  # Jitsi's official Flutter SDK: embeds the call INSIDE the app (no browser
+  # redirect). Agora was removed entirely — it was unused dead code after the
+  # switch to Jitsi, and trimming unused native plugins reduces the chance of
+  # Android Gradle/AGP conflicts (minSdkVersion, namespace, duplicate native
+  # libs) — exactly the kind of thing that causes silent/confusing build errors.
+
+  # --- ISL sign recognition pipeline (model-free) ---
+  # hand_landmarker bundles Google's MediaPipe hand-tracking model directly —
+  # no training, no asset file to supply. We build our own geometric rules
+  # (finger-extension states) on top of its 21 landmarks per hand. See
+  # lib/services/hand_sign_service.dart for the full explanation, including
+  # an honest caveat about what the bundled starter rules do and don't cover.
+  # ANDROID ONLY — matches the current target platform.
+  hand_landmarker: ^3.1.0
+  camera: ^0.12.1   # version pinned to match hand_landmarker's own constraint
+
+  # --- Utilities ---
+  http: ^1.2.0
+  permission_handler: ^13.0.2
+  provider: ^6.1.2
+  cupertino_icons: ^1.0.8
+  uuid: ^4.5.1            # generates unique meeting/room codes
+  path_provider: ^2.1.4   # where generated audio files are saved
+  audioplayers: ^6.1.0    # plays back the generated .wav file in-app
+  livekit_client: ^2.13.0
+  dart_jsonwebtoken: ^3.4.1
+  tflite_flutter: ^0.12.1
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^4.0.0
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/models/

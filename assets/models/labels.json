@@ -1,0 +1,19 @@
+{
+  "classes": [
+    "HELLO",
+    "HELP",
+    "NO",
+    "PLEASE",
+    "SORRY",
+    "THANK_YOU",
+    "YES"
+  ],
+  "sequence_length": 30,
+  "feature_count": 1662,
+  "feature_order": [
+    "pose_33x4",
+    "face_468x3",
+    "left_hand_21x3",
+    "right_hand_21x3"
+  ]
+}
